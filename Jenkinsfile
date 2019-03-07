@@ -14,12 +14,6 @@ pipeline {
                 sh 'python -m py_compile app.py' 
             }
         }
-       stage('Building Image') {
-         steps {
-           script {
-             dockerImage = docker.build registry + ":$BUILD_NUMBER"
-             }
-          }
-       } 
+       
     }
 }
