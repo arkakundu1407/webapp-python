@@ -1,7 +1,6 @@
 pipeline {
     environment {
      dockerImage = ''
-     containerId = sh(script: 'docker ps -aqf "name=python-app"',returnStdout: true)
    }
     agent none 
     stages {
