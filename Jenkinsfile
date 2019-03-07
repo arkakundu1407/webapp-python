@@ -1,6 +1,9 @@
 pipeline {
     environment {
+     registry = "arkakundu1407/docker-pipeline"
+     registryCredential = 'dockerhub'
      dockerImage = ''
+     containerId = sh(script: 'docker ps -aqf "name=node-app"',returnStdout: true)
    }
     agent none 
     stages {
@@ -14,6 +17,27 @@ pipeline {
                 sh 'python -m py_compile app.py' 
             }
         }
-       
+        stage('Building Image') {
+         steps {
+           script {
+             dockerImage = docker.build registry + ":$BUILD_NUMBER"
+             }
+          }
+       }
+     stage('Push Image') {
+       steps{
+         script{
+           docker.withRegistry('',registryCredential) {
+             dockerImage.push()
+         }
+        }
+      }
+     }
+     
+     stage ('Run container') {
+       steps {
+          sh 'docker run --name=node-app -d -p 3000:3000 $registry:$BUILD_NUMBER &'
+       }
+     }
     }
 }
