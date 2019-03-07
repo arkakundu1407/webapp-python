@@ -5,7 +5,7 @@ pipeline {
      dockerImage = ''
      containerId = sh(script: 'docker ps -aqf "name=node-app"',returnStdout: true)
    }
-    agent none 
+    agent any
     stages {
         stage('Build') { 
             agent {
@@ -36,7 +36,7 @@ pipeline {
      
      stage ('Run container') {
        steps {
-          sh 'docker run --name=node-app -d -p 3000:3000 $registry:$BUILD_NUMBER &'
+          sh 'docker run --name=node-app -d -p 8082:80 $registry:$BUILD_NUMBER &'
        }
      }
     }
