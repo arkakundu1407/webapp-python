@@ -37,7 +37,7 @@ pipeline {
      
      stage ('Deploy application') {
        steps {
-           KubernetesDeploy(
+           kubernetesDeploy(
                kubeconfig : 'kubeconfig',
                configs : 'Application.yml',
                enableConfigSubstitution : false
