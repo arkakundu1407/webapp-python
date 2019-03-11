@@ -35,9 +35,13 @@ pipeline {
       }
      }
      
-     stage ('Run container') {
+     stage ('Deploy application') {
        steps {
-          sh 'docker run --name=node-app -d -p 8082:80 $registry:$BUILD_NUMBER &'
+           KubernetesDeploy {
+               kubeconfig : 'kubeconfig',
+               configs : 'Application.yml',
+               enableConfigSubstitution : false
+           }
        }
      }
     }
