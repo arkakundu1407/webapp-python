@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: webapp
-        image: arkakundu1407/docker-pipeline:7
+        #image: arkakundu1407/docker-pipeline:7
+        image: arkakundu1407/docker-pipeline
         ports:
         - containerPort: 80
 ---
